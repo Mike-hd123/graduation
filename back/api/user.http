@@ -1,0 +1,124 @@
+# 全局链接
+@baseUrl = http://localhost:8081/api
+# 用户接口链接
+@userUrl = {{baseUrl}}/user
+@studentUrl = {{baseUrl}}/student
+@teacherUrl = {{baseUrl}}/teacher
+@studentToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzMiwyLDMxNjg5MDExMDEsMTY1MDgwNDA3NDQwNyJ9.zo-wA9xSg0EOMPx3JgvM4d2Sytkr2ulrZapVokaVKOM
+@teacherToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzMSwxLDM4OTAyOTAsMTY1MDgwNDA5Mzk0OSJ9.-KYpDRmEPldLgQk8jqQQXwsSBnWDJrFA1THtwR-n4ZA
+## 与账号有关
+# token id type user
+# 登录接口
+# 管理员 admin 0
+# 学生 3168901101 2
+# 教师 3890290 1
+POST {{userUrl}}/login
+content-type: application/json
+
+{
+    "username":"admin",
+    "password":"e10adc3949ba59abbe56e057f20f883e"
+}
+###
+
+# 获取个人信息
+GET {{userUrl}}/me
+Authorization: {{teacherToken}}
+###
+# 获取头像
+GET  {{userUrl}}/getFile
+Authorization: {{studentToken}}
+###
+# 上传头像
+POST {{userUrl}}/upFile
+Authorization: {{studentToken}}
+Content-Disposition: form-data; name="image"; filename="1.png"
+Content-Type: image/png
+
+< ./1.png
+###
+
+# 修改密码
+PUT {{userUrl}}/changePass
+content-type: application/json
+Authorization: {{studentToken}}
+
+{
+    "oldpass":"e10adc3949ba59abbe56e057f20f883e",
+    "newpass":"e10adc3949ba59abbe56e057f20f883e"
+}
+###
+
+#获取验证码
+GET {{userUrl}}/getcode/Mike-hd123@qq.com
+Authorization: {{studentToken}}
+###
+
+# 忘记密码
+PUT {{userUrl}}/forgotPass
+content-type: application/json
+Authorization: {{studentToken}}
+
+{
+    "code":"626991",
+    "newPass":"e10adc3949ba59abbe56e057f20f883e"
+}
+###
+
+#退出登录
+GET  {{userUrl}}/loginout
+Authorization: {{teacherToken}}
+###
+
+### 学生接口
+## 获取成绩
+GET {{studentUrl}}/getScoreList
+Authorization: {{studentToken}}
+###
+## 导出成绩
+GET {{studentUrl}}/export
+Authorization: {{studentToken}}
+###
+## 获取分数等级数据
+GET {{studentUrl}}/getUserNum
+Authorization: {{studentToken}}
+###
+## 获取总学分和绩点
+GET {{studentUrl}}/getUserTotal
+Authorization: {{studentToken}}
+###
+GET {{studentUrl}}/getCourseList
+Authorization: {{studentToken}}
+###
+
+### 教师接口
+## 获取成绩
+GET {{teacherUrl}}/getScoreList?studentId=3168901101
+Authorization: {{teacherToken}}
+###
+## 导出成绩
+GET {{teacherUrl}}/export?studentId=3168901101
+Authorization: {{teacherToken}}
+###
+## 获取分数等级数据
+GET {{teacherUrl}}/getUserNum?studentId=3168901101
+Authorization: {{teacherToken}}
+###
+## 获取总学分和绩点
+GET {{teacherUrl}}/getUserTotal?studentId=3168901101
+Authorization: {{teacherToken}}
+###
+## 获取课程
+GET {{teacherUrl}}/getCourseList
+Authorization: {{teacherToken}}
+###
+GET {{teacherUrl}}/getCourseByMap
+Authorization: {{teacherToken}}
+###
+GET {{teacherUrl}}/getCourseInfo
+Authorization: {{teacherToken}}
+###
+## 获取专业
+GET {{baseUrl}}/profession/getProfessionList
+Authorization: {{teacherToken}}
+###
