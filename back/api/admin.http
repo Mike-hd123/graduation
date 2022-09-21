@@ -1,0 +1,295 @@
+# 全局链接
+@baseUrl = http://localhost:8081/api
+@adminUrl = {{baseUrl}}/admin
+@adminToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxLDAsMTAwMDAxLDE2NTA4NTMxNDY5ODYifQ.m_l6mjbuvGdx6WGm9SoTLOn0UZSskBBw4oWM2poRNwE
+
+### 管理员接口
+###
+# ==========================================  管理员账户   ==========================================
+# 添加管理员
+
+#     realName 真实名称
+#     school 学校
+#     phone 电话号码
+#     sex 性别
+
+POST {{adminUrl}}
+content-type: application/json
+Authorization: {{adminToken}}
+
+{
+    "realName":"李小来",
+    "school":"某某大学",
+    "phone":"16607784433",
+    "sex":0
+}
+###
+# 删除管理员
+DELETE {{adminUrl}}/100002
+Authorization: {{adminToken}}
+###
+# 更新管理员
+PUT  {{adminUrl}}
+content-type: application/json
+Authorization: {{adminToken}}
+
+{
+    "id":"100002",
+    "realName":"李小来",
+    "school":"某某大学2",
+    "phone":"16607784432",
+    "sex":0
+}
+###
+
+# 获取列表
+GEt {{adminUrl}}/getAdminList?$limit=10&$offset=0
+Authorization: {{adminToken}}
+###
+# ==========================================  学生账户   ==========================================
+# 增
+
+#     realName 真实姓名
+#     school 学校
+#     admission_time 入学时间
+#     profession 专业
+#     grade 班级
+#     phone 联系电话
+#     sex 性别
+
+POST {{adminUrl}}/student
+content-type: application/json
+Authorization: {{adminToken}}
+
+{
+    "realName":"花小白",
+    "school": "xx学院",
+    "admissionTime":"2022",
+    "profession":"物联网",
+    "grade":2201,
+    "phone":"188565235",
+    "sex":0
+}
+###
+# 删
+DELETE {{adminUrl}}/student/3228902101
+Authorization: {{adminToken}}
+###
+# 改
+PUT {{adminUrl}}/student
+content-type: application/json
+Authorization: {{adminToken}}
+
+{
+    "id":"3228902101",
+    "real_name":"花小白",
+    "school": "xx学院",
+    "admissionTime":"2022",
+    "profession":"物联网",
+    "grade":2201,
+    "phone":"188565235",
+    "sex":1
+}
+###
+# 查
+GET  {{adminUrl}}/student/getStudentList?$limit=10&$offset=0&code=&profession=%E7%BD%91%E7%BB%9C%E5%B7%A5%E7%A8%8B&grade=1601
+Authorization: {{adminToken}}
+###
+# ==========================================  教师账户   ==========================================
+# 增
+#     realName 真实姓名
+#     school 学校
+#     phone 联系电话
+#     sex 性别
+POST {{adminUrl}}/teacher
+content-type: application/json
+Authorization: {{adminToken}}
+
+{
+    "realName":"花小军",
+    "school": "xx学院",
+    "phone":"188565235",
+    "sex":0
+}
+###
+# 删
+DELETE {{adminUrl}}/teacher/3890300
+Authorization: {{adminToken}}
+###
+# 改
+PUT {{adminUrl}}/teacher
+content-type: application/json
+Authorization: {{adminToken}}
+
+{
+    "id":"3890300",
+    "realName":"花小军",
+    "school": "yy学院",
+    "phone":"188565235",
+    "sex":1
+}
+###
+# 查(code:教师名称)
+GET  {{adminUrl}}/teacher/getTeacherList?$limit=10&$offset=0&code=
+Authorization: {{adminToken}}
+###
+# ==========================================  课程   ==========================================
+## 添加课程
+#     name 课程名称
+#     number 课时 
+#     credits 学分
+#     score 满分
+#     year 届时
+#     type 类型: 1 必修 2 选修
+#     term 学期 1上 2下
+#     profession 专业
+
+POST {{adminUrl}}/course
+content-type: application/json
+Authorization: {{adminToken}}
+
+{
+    "name":"c++",
+    "number": 50,
+    "credits":4.0,
+    "score":100,
+    "year":21,
+    "type":1,
+    "term":2,
+    "start":1,
+    "end":24,
+    "room":"108",
+    "profession":"软件工程"
+}
+###
+# 删除课程
+DELETE {{adminUrl}}/course/210132001
+Authorization: {{adminToken}}
+###
+# 修改课程
+PUT {{adminUrl}}/course
+content-type: application/json
+Authorization: {{adminToken}}
+
+{
+    "id":"210132001",
+    "name":"c++",
+    "number": 50,
+    "credits":4.0,
+    "score":100,
+    "year":21,
+    "type":1,
+    "term":2,
+    "start":1,
+    "end":24,
+    "room":"109",
+    "profession":"软件工程"
+}
+###
+# 获取课程列表 (code:可匹配课程名称或者专业名称)
+GET  {{adminUrl}}/course/getCourseList?$limit=10&$offset=0&code=%E9%80%9A%E4%BF%A1
+Authorization: {{adminToken}}
+###
+
+# 获取课程通过专业和学期
+GET  {{adminUrl}}/course/getCourseByMap?$limit=10&$offset=0&profession=&term=&courseName=
+Authorization: {{adminToken}}
+###
+# ==============================================  专业   ============================================
+## 专业
+GET {{baseUrl}}/profession/getProfessionList
+Authorization: {{adminToken}}
+###
+# ==========================================  账户管理相关   ========================================
+# 获取账户分级列表
+GET {{adminUrl}}/getTree
+Authorization: {{adminToken}}
+###
+# ==========================================  成绩相关   ========================================
+# 录入成绩（自动更新或录入成绩）
+POST {{adminUrl}}/score
+Content-Type: application/json
+Authorization: {{adminToken}}
+
+[{
+    "id":"2016011005",
+    "name":"模拟电子线路",
+    "credits":4,
+    "score":100,
+    "number":18,
+    "year":2016,
+    "term":1,
+    "type":1,
+    "profession":"电子信息工程",
+    "grade":"1601",
+    "realName":"林立川",
+    "studentId":"3168901101",
+    "pointByUser":"1.70",
+    "scoreByUser":"75",
+    "creditsByUser":"4.00",
+    "createTime":"2020-05-04T21:36:02.000+00:00"}
+    ]
+###
+## 获取成绩
+GET {{adminUrl}}/score/getScoreList?$limit=10&$offset=3&profession=&grade=&username=&courseName=&studentName=&year=&term=
+Authorization: {{adminToken}}
+###
+## 根据成绩划分等级（不及格、及格、优秀）
+GET {{adminUrl}}/score/getUserNum?profession=电子信息工程&grade=1601&courseName=线性代数
+Authorization: {{adminToken}}
+###
+###
+## 导出export
+GET {{adminUrl}}/score/export?profession=电子信息工程&grade=1601&courseName=线性代数
+Authorization: {{adminToken}}
+###
+# ==========================================  教授相关   ========================================
+## 增
+POST  {{adminUrl}}/teach
+Content-Type: application/json
+Authorization: {{adminToken}}
+
+[{
+    "teacherId":"3890240",
+    "name":"数字电路基础(下)",
+    "profession":"软件工程",
+    "grade":"101",
+    "term":2,
+    "courseId":"2016041006"
+}]
+###
+## 删
+DELETE {{adminUrl}}/teach/26
+Authorization: {{adminToken}}
+###
+## 改
+PUT  {{adminUrl}}/teach
+Content-Type: application/json
+Authorization: {{adminToken}}
+
+{
+    "id":"25",
+    "teacherId":"3890290",
+    "name":"数字电路基础(下)",
+    "profession":"软件工程",
+    "grade":"101",
+    "term":2,
+    "courseId":""   
+}
+###
+## 查 根据教师id获取教师课程信息
+GET {{adminUrl}}/teach/getCourseListById/3890290
+Authorization: {{adminToken}}
+###
+# 根据教师id获取教师用户所管理的专业、班级、课程名等信息
+GET {{adminUrl}}/teach/getProfessionInfoByTeacher/3890290
+Authorization: {{adminToken}}
+###
+# 管理员用户获取所有的班级和课程
+GET {{adminUrl}}/teach/getProfessionInfoByAdmin
+Authorization: {{adminToken}}
+###
+# 获取课程信息
+GET {{adminUrl}}/teach/getCourseInfo?id=3890290&profession=电子信息工程&grade=1601&term=1
+Authorization: {{adminToken}}
+###

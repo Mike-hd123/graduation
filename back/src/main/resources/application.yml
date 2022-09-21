@@ -1,0 +1,13 @@
+Server:
+  port: 8081
+
+mybatis:
+    mapperLocations: classpath:mapper/*.xml
+    configuration:
+        map-underscore-to-camel-case: true
+        useGeneratedKeys: true
+        useColumnLabel: true
+
+spring:
+  profiles:
+    active: "@profiles.active@"
